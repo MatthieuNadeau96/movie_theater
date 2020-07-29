@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'Upcoming',
     'Recommended',
     'Popular',
+    'Top Grossing',
   ];
 
   @override
@@ -104,32 +105,52 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                height: 90,
+                height: 100,
                 // flex: 1,
                 child: Container(
-                  // height: 100,
-                  color: Colors.grey[200],
-                  padding: EdgeInsets.symmetric(vertical: 20),
+                  height: 120,
+                  // color: Colors.grey[200],
+                  padding: EdgeInsets.symmetric(vertical: 16),
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: header.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        padding: EdgeInsets.only(right: 20, left: 18),
-                        child: Text(
-                          header[index],
-                          style: TextStyle(
-                            fontSize: 30,
+                      return Stack(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.only(right: 20, left: 18),
+                            child: Text(
+                              header[index],
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  color: index == 0
+                                      ? Colors.black
+                                      : Colors.grey[400]),
+                            ),
                           ),
-                        ),
+                          if (index == 0)
+                            Align(
+                              heightFactor: 10.5,
+                              widthFactor: 1.4,
+                              alignment: Alignment.bottomRight,
+                              child: Container(
+                                width: 50,
+                                height: 5,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).accentColor,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                              ),
+                            ),
+                        ],
                       );
                     },
                   ),
                 ),
               ),
-              Container(
-                height: 400,
-                // flex: 6,
+              Expanded(
+                // height: 400,
+                flex: 6,
                 child: CarouselSlider(
                   options: CarouselOptions(
                     // height: 300.0,
@@ -145,16 +166,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Expanded(
                                 child: Container(
-                                  width: MediaQuery.of(context).size.width,
+                                  // width: MediaQuery.of(context).size.width,
                                   margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                          'https://image.tmdb.org/t/p/original/' +
-                                              movie.poster,
-                                        ),
-                                        fit: BoxFit.cover),
+                                  child: ClipRRect(
                                     borderRadius: BorderRadius.circular(40),
+                                    child: Image(
+                                      image: NetworkImage(
+                                        'https://image.tmdb.org/t/p/original/' +
+                                            movie.poster,
+                                      ),
+                                      fit: BoxFit.fill,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -166,6 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 15),
                               Container(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -173,11 +196,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Icon(
                                       Icons.star,
                                       color: Colors.yellow[800],
+                                      size: 12,
                                     ),
                                     Text(movie.rating.toString()),
                                   ],
                                 ),
-                              )
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.10,
+                              ),
                             ],
                           ),
                         );
