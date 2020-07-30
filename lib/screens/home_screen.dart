@@ -198,6 +198,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               Container(
                                 child: Text(
                                   movie.title,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                     fontSize: 30,
                                   ),
