@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:movie_theater/bloc/get_now_playing_movies_bloc.dart';
 import 'package:movie_theater/model/movie.dart';
 import 'package:movie_theater/model/movie_response.dart';
+import 'package:movie_theater/screens/detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,7 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     nowPlayingMoviesBloc..getMovies();
   }
@@ -72,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildNowPlayingWidget(MovieResponse data) {
+    final Size deviceSize = MediaQuery.of(context).size;
     List<Movie> movies = data.movies;
     if (movies.length == 0) {
       return Container(
@@ -153,10 +154,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 flex: 6,
                 child: CarouselSlider(
                   options: CarouselOptions(
-                    // height: 300.0,
+                    height: 300.0,
                     enlargeCenterPage: true,
                     disableCenter: true,
                     enableInfiniteScroll: true,
+                    viewportFraction: deviceSize.width > 600 ? 0.55 : 0.75,
+                    aspectRatio: 1,
                   ),
                   items: movies.map((movie) {
                     return Builder(
@@ -165,21 +168,33 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Column(
                             children: [
                               Expanded(
-                                child: Container(
-                                  // width: MediaQuery.of(context).size.width,
-                                  margin: EdgeInsets.symmetric(horizontal: 5.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(40),
-                                    child: Image(
-                                      image: NetworkImage(
-                                        'https://image.tmdb.org/t/p/original/' +
-                                            movie.poster,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailScreen(movie: movie),
                                       ),
-                                      fit: BoxFit.fill,
+                                    );
+                                  },
+                                  child: Container(
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 5.0),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(40),
+                                      child: Image(
+                                        image: NetworkImage(
+                                          'https://image.tmdb.org/t/p/original/' +
+                                              movie.poster,
+                                        ),
+                                        fit: BoxFit.fill,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
+                              SizedBox(height: 15),
                               Container(
                                 child: Text(
                                   movie.title,
@@ -203,8 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.10,
+                                height: deviceSize.height * 0.10,
                               ),
                             ],
                           ),
