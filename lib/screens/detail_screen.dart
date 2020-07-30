@@ -88,9 +88,70 @@ class _DetailScreenState extends State<DetailScreen> {
   Widget _buildMovieDetailsWidget(MovieDetailResponse data) {
     MovieDetail movieDetails = data.movieDetail;
     final Size deviceSize = MediaQuery.of(context).size;
+    String imageUrl = 'https://image.tmdb.org/t/p/original/';
     return Container(
-      child: Center(
-        child: Text(movie.title),
+      margin: EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 50,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(40),
+        color: Theme.of(context).primaryColor.withOpacity(0.3),
+      ),
+      height: 400,
+      child: Column(
+        children: [
+          Container(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(40),
+              child: Image(
+                image: NetworkImage(
+                  imageUrl + movieDetails.backPoster,
+                ),
+                fit: BoxFit.fill,
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  movieDetails.title,
+                  style: TextStyle(fontSize: 24),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  height: 30,
+                  child: ListView.builder(
+                    itemCount: movieDetails.genres.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColorDark,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        margin: EdgeInsets.only(right: 5),
+                        child: Center(
+                          child: Text(
+                            movieDetails.genres[index].name,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                )
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

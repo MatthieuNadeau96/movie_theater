@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:movie_theater/model/cast_response.dart';
 import 'package:movie_theater/model/movie_detail_response.dart';
 import 'package:movie_theater/model/movie_response.dart';
 import 'package:movie_theater/model/genre_response.dart';
@@ -121,6 +122,21 @@ class MovieRepository {
     } catch (error, stackTrace) {
       print('Exception occured: $error stackTrace: $stackTrace');
       return MovieDetailResponse.withError('$error');
+    }
+  }
+
+  Future<CastResponse> getCasts(int id) async {
+    var params = {
+      'api_key': apiKey,
+      'language': 'en-US',
+    };
+    try {
+      Response response = await _dio.get(movieUrl + '/$id' + '/credits',
+          queryParameters: params);
+      return CastResponse.fromJson(response.data);
+    } catch (error, stackTrace) {
+      print('Exception occured: $error stackTrace: $stackTrace');
+      return CastResponse.withError('$error');
     }
   }
 }
