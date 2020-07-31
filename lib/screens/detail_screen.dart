@@ -97,24 +97,21 @@ class _DetailScreenState extends State<DetailScreen> {
     return SafeArea(
       child: Stack(
         children: [
-          Hero(
-            tag: movie.id,
-            child: Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(imageUrl + movie.poster),
-                  fit: BoxFit.fill,
-                ),
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(imageUrl + movie.poster),
+                fit: BoxFit.fill,
               ),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(
-                  sigmaX: 12,
-                  sigmaY: 12,
-                ),
-                child: Container(
-                  height: deviceSize.height,
-                  color: Theme.of(context).primaryColor.withOpacity(0.4),
-                ),
+            ),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(
+                sigmaX: 12,
+                sigmaY: 12,
+              ),
+              child: Container(
+                height: deviceSize.height,
+                color: Theme.of(context).primaryColor.withOpacity(0.4),
               ),
             ),
           ),
@@ -196,15 +193,19 @@ class _DetailScreenState extends State<DetailScreen> {
                         width: deviceSize.width,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(40),
-                          child: Image(
-                            image: NetworkImage(
-                              imageUrl + movieDetails.backPoster,
+                          child: Hero(
+                            transitionOnUserGestures: true,
+                            tag: 'poster' + movie.poster,
+                            child: Image(
+                              image: NetworkImage(
+                                imageUrl + movieDetails.backPoster,
+                              ),
+                              fit: BoxFit.cover,
                             ),
-                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 50),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: Column(
@@ -279,20 +280,18 @@ class _DetailScreenState extends State<DetailScreen> {
                                 },
                               ),
                             ),
-                            SizedBox(height: 30),
                           ],
                         ),
                       )
                     ],
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 50),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
-                  padding: EdgeInsets.symmetric(vertical: 20),
                   child: Casts(id: movie.id),
                 ),
-                SizedBox(height: 30),
+                SizedBox(height: 50),
               ],
             ),
           ),

@@ -102,25 +102,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 items: movies.sublist(0, 10).map((movie) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return Hero(
-                        tag: movie.id,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: NetworkImage(imageUrl + movie.poster),
-                              fit: BoxFit.fill,
-                            ),
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(imageUrl + movie.poster),
+                            fit: BoxFit.fill,
                           ),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 12,
-                              sigmaY: 12,
-                            ),
-                            child: Container(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.2),
-                            ),
+                        ),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: 12,
+                            sigmaY: 12,
+                          ),
+                          child: Container(
+                            color:
+                                Theme.of(context).primaryColor.withOpacity(0.2),
                           ),
                         ),
                       );
@@ -210,11 +206,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(40),
-                                          child: Image(
-                                            image: NetworkImage(
-                                              imageUrl + movie.poster,
+                                          child: Hero(
+                                            tag: 'poster' + movie.poster,
+                                            transitionOnUserGestures: true,
+                                            child: Image(
+                                              image: NetworkImage(
+                                                imageUrl + movie.poster,
+                                              ),
+                                              fit: BoxFit.fill,
                                             ),
-                                            fit: BoxFit.fill,
                                           ),
                                         ),
                                       ),

@@ -45,12 +45,15 @@ class _CastsState extends State<Casts> {
                   color: Colors.white,
                 ),
               ),
-              Text(
-                'See All',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Theme.of(context).accentColor,
-                  fontWeight: FontWeight.w500,
+              InkWell(
+                onTap: () {},
+                child: Text(
+                  'See All',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).accentColor,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
             ],
