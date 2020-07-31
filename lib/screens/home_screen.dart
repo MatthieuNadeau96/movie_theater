@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CarouselSlider(
                 carouselController: carouselController,
                 options: CarouselOptions(
+                  scrollPhysics: NeverScrollableScrollPhysics(),
                   height: deviceSize.height,
                   viewportFraction: 1,
                 ),
