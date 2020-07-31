@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_theater/bloc/get_now_playing_movies_bloc.dart';
@@ -11,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  CarouselController carouselController = CarouselController();
   final List<String> header = <String>[
     'In Theater',
     'Upcoming',
@@ -18,6 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
     'Popular',
     'Top Grossing',
   ];
+
+  int prevMovieIndex = -1;
+  int movieIndex = -1;
 
   @override
   void initState() {
@@ -72,6 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildNowPlayingWidget(MovieResponse data) {
+    final String imageUrl = 'https://image.tmdb.org/t/p/original/';
     final Size deviceSize = MediaQuery.of(context).size;
     List<Movie> movies = data.movies;
     if (movies.length == 0) {
@@ -82,157 +89,133 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     } else
       return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Theme.of(context).canvasColor,
-          leading: IconButton(
-            icon: Icon(
-              Icons.menu_rounded,
-            ),
-            color: Theme.of(context).primaryColor,
-            onPressed: () {},
-          ),
-          actions: [
-            IconButton(
-              icon: Icon(
-                Icons.search,
-              ),
-              color: Theme.of(context).primaryColor,
-              onPressed: () {},
-            )
-          ],
-          elevation: 0,
-        ),
-        body: Container(
-          child: Column(
-            children: [
-              Container(
-                height: 100,
-                // flex: 1,
-                child: Container(
-                  height: 120,
-                  // color: Colors.grey[200],
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: header.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Stack(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(right: 20, left: 18),
-                            child: Text(
-                              header[index],
-                              style: TextStyle(
-                                  fontSize: 30,
-                                  color: index == 0
-                                      ? Colors.black
-                                      : Colors.grey[400]),
-                            ),
+        body: Stack(
+          children: [
+            Container(
+              child: CarouselSlider(
+                carouselController: carouselController,
+                options: CarouselOptions(
+                  height: deviceSize.height,
+                  viewportFraction: 1,
+                ),
+                items: movies.sublist(0, 10).map((movie) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(imageUrl + movie.poster),
+                            fit: BoxFit.fill,
                           ),
-                          if (index == 0)
-                            Align(
-                              heightFactor: 10.5,
-                              widthFactor: 1.4,
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                width: 50,
-                                height: 5,
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                              ),
-                            ),
-                        ],
+                        ),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(
+                            sigmaX: 12,
+                            sigmaY: 12,
+                          ),
+                          child: Container(
+                            color: Theme.of(context)
+                                .primaryColorDark
+                                .withOpacity(0.2),
+                          ),
+                        ),
                       );
                     },
-                  ),
-                ),
+                  );
+                }).toList(),
               ),
-              Expanded(
-                // height: 400,
-                flex: 6,
-                child: CarouselSlider(
-                  options: CarouselOptions(
-                    height: 300.0,
-                    enlargeCenterPage: true,
-                    disableCenter: true,
-                    enableInfiniteScroll: true,
-                    viewportFraction: deviceSize.width > 600 ? 0.55 : 0.75,
-                    aspectRatio: 1,
+            ),
+            Container(
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: deviceSize.height * 0.20,
                   ),
-                  items: movies.map((movie) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          child: Column(
-                            children: [
-                              Expanded(
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            DetailScreen(movie: movie),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 5.0),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(40),
-                                      child: Image(
-                                        image: NetworkImage(
-                                          'https://image.tmdb.org/t/p/original/' +
-                                              movie.poster,
+                  Expanded(
+                    child: CarouselSlider(
+                      options: CarouselOptions(
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            movieIndex = index;
+                          });
+                          _linkHandler(index);
+                          setState(() {
+                            prevMovieIndex = index;
+                          });
+                        },
+                        height: 300.0,
+                        enlargeCenterPage: true,
+                        disableCenter: true,
+                        enableInfiniteScroll: true,
+                        viewportFraction: deviceSize.width > 600 ? 0.55 : 0.75,
+                        aspectRatio: 1,
+                      ),
+                      items: movies.sublist(0, 10).map((movie) {
+                        return Builder(
+                          builder: (BuildContext context) {
+                            return Container(
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                DetailScreen(movie: movie),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.black
+                                                  .withOpacity(0.47),
+                                              spreadRadius: -17,
+                                              blurRadius: 15,
+                                              offset: Offset(0, 28),
+                                            ),
+                                          ],
                                         ),
-                                        fit: BoxFit.fill,
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          child: Image(
+                                            image: NetworkImage(
+                                              imageUrl + movie.poster,
+                                            ),
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              ),
-                              SizedBox(height: 15),
-                              Container(
-                                child: Text(
-                                  movie.title,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: 30,
+                                  SizedBox(
+                                    height: deviceSize.height * 0.20,
                                   ),
-                                ),
+                                ],
                               ),
-                              SizedBox(height: 15),
-                              Container(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.star,
-                                      color: Colors.yellow[800],
-                                      size: 12,
-                                    ),
-                                    Text(movie.rating.toString()),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: deviceSize.height * 0.10,
-                              ),
-                            ],
-                          ),
+                            );
+                          },
                         );
-                      },
-                    );
-                  }).toList(),
-                ),
+                      }).toList(),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       );
+  }
+
+  dynamic _linkHandler(int index) {
+    carouselController.jumpToPage(index);
   }
 }
