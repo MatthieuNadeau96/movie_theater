@@ -13,6 +13,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Color(0xff1E2739),
+        primaryColorLight: Color(0xff2C374E),
+        accentColor: Color(0xff9BBECF),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         iconTheme: IconThemeData(
           color: Colors.black,

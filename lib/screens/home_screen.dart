@@ -129,6 +129,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 }).toList(),
               ),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).primaryColor.withOpacity(1.0),
+                      Theme.of(context).primaryColor.withOpacity(0.0),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    stops: [
+                      0.1,
+                      0.8,
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Container(
               child: Column(
                 children: [

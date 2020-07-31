@@ -31,6 +31,7 @@ dependencies:
   rxdart: ^0.24.1
   dio: ^3.0.9
   carousel_slider: ^2.2.1
+  auto_size_text: ^2.1.0
 
 dev_dependencies:
   flutter_test:

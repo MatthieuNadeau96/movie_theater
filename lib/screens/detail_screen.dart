@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_theater/bloc/get_movie_detail_bloc.dart';
 import 'package:movie_theater/model/movie.dart';
@@ -130,7 +131,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   end: Alignment.topCenter,
                   stops: [
                     0.3,
-                    0.5,
+                    0.8,
                   ],
                 ),
               ),
@@ -139,20 +140,60 @@ class _DetailScreenState extends State<DetailScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 28,
+                        color: Theme.of(context).canvasColor.withOpacity(0.8),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    Container(
+                      width: deviceSize.width * 0.6,
+                      child: Center(
+                        child: AutoSizeText(
+                          movieDetails.title,
+                          maxLines: 1,
+                          minFontSize: 12,
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white.withOpacity(0.9),
+                          ),
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 28,
+                        color: Colors.transparent,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: 15),
                 Container(
                   margin: EdgeInsets.symmetric(
                     horizontal: 20,
-                    vertical: 30,
                   ),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Theme.of(context).canvasColor.withOpacity(0.1),
                   ),
-                  height: 400,
                   child: Column(
                     children: [
                       Container(
-                        height: 200,
+                        height: 250,
+                        width: deviceSize.width,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(40),
                           child: Image(
@@ -165,18 +206,49 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       SizedBox(height: 20),
                       Container(
-                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.symmetric(horizontal: 30),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              movieDetails.title,
-                              style: TextStyle(
-                                fontSize: 24,
-                                color: Colors.white,
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    child: Text(
+                                      movieDetails.overview,
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.75),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 15),
+                            Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.yellow[700],
+                                  size: 14,
+                                ),
+                                SizedBox(width: 5),
+                                Text(
+                                  movieDetails.rating.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '/10',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 10),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 15),
                             Container(
                               height: 30,
                               child: ListView.builder(
@@ -186,45 +258,43 @@ class _DetailScreenState extends State<DetailScreen> {
                                   return Container(
                                     decoration: BoxDecoration(
                                       color: Theme.of(context)
-                                          .primaryColor
-                                          .withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(40),
+                                          .primaryColorLight
+                                          .withOpacity(0.8),
+                                      borderRadius: BorderRadius.circular(20),
                                     ),
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 10,
+                                      horizontal: 12,
                                     ),
                                     margin: EdgeInsets.only(right: 5),
                                     child: Center(
                                       child: Text(
                                         movieDetails.genres[index].name,
-                                        style: TextStyle(color: Colors.white),
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
                                   );
                                 },
                               ),
-                            )
+                            ),
+                            SizedBox(height: 30),
                           ],
                         ),
                       )
                     ],
                   ),
                 ),
+                SizedBox(height: 15),
                 Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(vertical: 20),
                   child: Casts(id: movie.id),
                 ),
-                SizedBox(height: 2000),
+                SizedBox(height: 30),
               ],
             ),
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Theme.of(context).canvasColor.withOpacity(0.8),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
           ),
         ],
       ),

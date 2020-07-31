@@ -32,13 +32,13 @@ class _CastsState extends State<Casts> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 30),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                'Actors',
+                'Cast',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -48,8 +48,8 @@ class _CastsState extends State<Casts> {
               Text(
                 'See All',
                 style: TextStyle(
-                  fontSize: 16,
-                  color: Theme.of(context).primaryColorLight,
+                  fontSize: 14,
+                  color: Theme.of(context).accentColor,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -108,7 +108,7 @@ class _CastsState extends State<Casts> {
     final Size size = MediaQuery.of(context).size;
     List<Cast> casts = data.casts;
     return Container(
-      height: size.height * 0.22,
+      height: 120,
       child: ListView.builder(
         itemCount: casts.length > 10 ? 10 : casts.length - 1,
         scrollDirection: Axis.horizontal,
@@ -121,8 +121,8 @@ class _CastsState extends State<Casts> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    width: 100,
-                    height: 100,
+                    width: 90,
+                    height: 90,
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
@@ -136,7 +136,8 @@ class _CastsState extends State<Casts> {
                   SizedBox(height: 10),
                   Text(
                     casts[index].name,
-                    maxLines: 2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       height: 1.4,
                       fontWeight: FontWeight.w500,
