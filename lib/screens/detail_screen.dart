@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:movie_theater/bloc/get_movie_detail_bloc.dart';
 import 'package:movie_theater/model/movie.dart';
@@ -91,81 +93,139 @@ class _DetailScreenState extends State<DetailScreen> {
     MovieDetail movieDetails = data.movieDetail;
     final Size deviceSize = MediaQuery.of(context).size;
     String imageUrl = 'https://image.tmdb.org/t/p/original/';
-    return SingleChildScrollView(
-      child: Column(
+    return SafeArea(
+      child: Stack(
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: 20,
-              vertical: 30,
+          Hero(
+            tag: movie.id,
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl + movie.poster),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(
+                  sigmaX: 12,
+                  sigmaY: 12,
+                ),
+                child: Container(
+                  height: deviceSize.height,
+                  color: Theme.of(context).primaryColor.withOpacity(0.4),
+                ),
+              ),
             ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: Theme.of(context).primaryColor.withOpacity(0.3),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).primaryColor.withOpacity(1.0),
+                    Theme.of(context).primaryColor.withOpacity(0.0),
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  stops: [
+                    0.3,
+                    0.5,
+                  ],
+                ),
+              ),
             ),
-            height: 400,
+          ),
+          SingleChildScrollView(
             child: Column(
               children: [
                 Container(
-                  height: 200,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Image(
-                      image: NetworkImage(
-                        imageUrl + movieDetails.backPoster,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 30,
                   ),
-                ),
-                SizedBox(height: 20),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Theme.of(context).canvasColor.withOpacity(0.1),
+                  ),
+                  height: 400,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        movieDetails.title,
-                        style: TextStyle(
-                          fontSize: 24,
-                          color: Colors.white,
+                      Container(
+                        height: 200,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(40),
+                          child: Image(
+                            image: NetworkImage(
+                              imageUrl + movieDetails.backPoster,
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       Container(
-                        height: 30,
-                        child: ListView.builder(
-                          itemCount: movieDetails.genres.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColorDark,
-                                borderRadius: BorderRadius.circular(40),
+                        margin: EdgeInsets.symmetric(horizontal: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              movieDetails.title,
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: Colors.white,
                               ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 10,
+                            ),
+                            SizedBox(height: 10),
+                            Container(
+                              height: 30,
+                              child: ListView.builder(
+                                itemCount: movieDetails.genres.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10,
+                                    ),
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: Center(
+                                      child: Text(
+                                        movieDetails.genres[index].name,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                              margin: EdgeInsets.only(right: 5),
-                              child: Center(
-                                child: Text(
-                                  movieDetails.genres[index].name,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            );
-                          },
+                            )
+                          ],
                         ),
                       )
                     ],
                   ),
-                )
+                ),
+                Container(
+                  child: Casts(id: movie.id),
+                ),
+                SizedBox(height: 2000),
               ],
             ),
           ),
-          Container(
-            child: Casts(id: movie.id),
-          )
+          IconButton(
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Theme.of(context).canvasColor.withOpacity(0.8),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ],
       ),
     );

@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Movie Theater App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xff1E2739),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         iconTheme: IconThemeData(
           color: Colors.black,

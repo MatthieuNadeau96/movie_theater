@@ -102,22 +102,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 items: movies.sublist(0, 10).map((movie) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(imageUrl + movie.poster),
-                            fit: BoxFit.fill,
+                      return Hero(
+                        tag: movie.id,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: NetworkImage(imageUrl + movie.poster),
+                              fit: BoxFit.fill,
+                            ),
                           ),
-                        ),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(
-                            sigmaX: 12,
-                            sigmaY: 12,
-                          ),
-                          child: Container(
-                            color: Theme.of(context)
-                                .primaryColorDark
-                                .withOpacity(0.2),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                              sigmaX: 12,
+                              sigmaY: 12,
+                            ),
+                            child: Container(
+                              color: Theme.of(context)
+                                  .primaryColor
+                                  .withOpacity(0.2),
+                            ),
                           ),
                         ),
                       );
