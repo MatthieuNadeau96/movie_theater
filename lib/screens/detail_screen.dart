@@ -107,13 +107,14 @@ class _DetailScreenState extends State<DetailScreen> {
             child: Column(
               children: [
                 Container(
+                  height: 200,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(40),
                     child: Image(
                       image: NetworkImage(
                         imageUrl + movieDetails.backPoster,
                       ),
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),

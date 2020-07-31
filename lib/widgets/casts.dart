@@ -110,7 +110,7 @@ class _CastsState extends State<Casts> {
     return Container(
       height: size.height * 0.22,
       child: ListView.builder(
-        itemCount: casts.length > 16 ? 17 : casts.length,
+        itemCount: casts.length > 10 ? 10 : casts.length - 1,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
           return Container(

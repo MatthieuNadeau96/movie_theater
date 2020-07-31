@@ -160,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
+                                        print(movie.id);
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
