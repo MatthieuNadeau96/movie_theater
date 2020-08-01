@@ -6,6 +6,7 @@ import 'package:movie_theater/bloc/get_movie_detail_bloc.dart';
 import 'package:movie_theater/model/movie.dart';
 import 'package:movie_theater/model/movie_detail.dart';
 import 'package:movie_theater/model/movie_detail_response.dart';
+import 'package:movie_theater/screens/seat_screen.dart';
 import 'package:movie_theater/widgets/casts.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -60,6 +61,26 @@ class _DetailScreenState extends State<DetailScreen> {
           );
         },
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).accentColor,
+        label: Text(
+          'BUY TICKET',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SeatScreen(),
+            ),
+          );
+        },
+        icon: Icon(Icons.confirmation_num),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -205,7 +226,7 @@ class _DetailScreenState extends State<DetailScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 50),
+                      SizedBox(height: 30),
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: Column(
@@ -215,6 +236,14 @@ class _DetailScreenState extends State<DetailScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  Text(
+                                    'Overview',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  SizedBox(height: 15),
                                   Container(
                                     child: Text(
                                       movieDetails.overview,
@@ -286,15 +315,35 @@ class _DetailScreenState extends State<DetailScreen> {
                     ],
                   ),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: Casts(id: movie.id),
                 ),
-                SizedBox(height: 50),
+                SizedBox(height: 100),
               ],
             ),
           ),
+          // Align(
+          //   alignment: Alignment.bottomCenter,
+          //   child: Container(
+          //     margin: EdgeInsets.symmetric(horizontal: 20),
+          //     child: MaterialButton(
+          //       colorBrightness: Brightness.dark,
+          //       color: Theme.of(context).primaryColorDark,
+          //       minWidth: deviceSize.width,
+          //       padding: EdgeInsets.symmetric(vertical: 20),
+          //       child: Text(
+          //         'BUY TICKET',
+          //         style: TextStyle(
+          //           fontWeight: FontWeight.bold,
+          //           fontSize: 15,
+          //         ),
+          //       ),
+          //       onPressed: () {},
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
