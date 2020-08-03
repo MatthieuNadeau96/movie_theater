@@ -1,8 +1,36 @@
+import 'dart:async';
+
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_theater/screens/home_screen.dart';
 
-class OrderConfirmedScreen extends StatelessWidget {
+class OrderConfirmedScreen extends StatefulWidget {
+  @override
+  _OrderConfirmedScreenState createState() => _OrderConfirmedScreenState();
+}
+
+class _OrderConfirmedScreenState extends State<OrderConfirmedScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    startTimer();
+  }
+
+  startTimer() async {
+    var duration = Duration(seconds: 5);
+    return Timer(duration, route);
+  }
+
+  route() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +56,6 @@ class OrderConfirmedScreen extends StatelessWidget {
                 animation: 'Animate MyCheckmark',
               ),
             ),
-            // child: ,
-            // child: Icon(
-            //   Icons.check_rounded,
-            //   color: Colors.white,
-            //   size: 60,
-            // ),
           ),
         ),
       ),
