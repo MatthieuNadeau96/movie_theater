@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie_theater/model/seat.dart';
 import 'package:movie_theater/repository/seat_data.dart';
+import 'package:movie_theater/screens/order_confirmed_screen.dart';
 import 'package:movie_theater/widgets/projector.dart';
 
 class SeatScreen extends StatefulWidget {
@@ -124,11 +125,20 @@ class _SeatScreenState extends State<SeatScreen> {
               ),
               SizedBox(height: 60),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (totalPrice > 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => OrderConfirmedScreen(),
+                      ),
+                    );
+                  }
+                },
                 child: Text(
                   (totalPrice <= 0 || totalPrice == null)
                       ? 'Purchase Tickets'
-                      : 'Pay \$$totalPrice ',
+                      : 'Pay \$${totalPrice.toStringAsFixed(2)} ',
                 ),
                 color: Colors.white,
               )
@@ -145,6 +155,5 @@ List _getTotal(List seats) {
   seats
       .map((e) => e.userSelected ? userSelectedSeats.add(9.12) : null)
       .toList();
-  print(userSelectedSeats);
   return userSelectedSeats;
 }

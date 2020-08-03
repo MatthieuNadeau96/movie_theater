@@ -22,6 +22,26 @@ List<Seat> getSeats() {
     Seat(color: Colors.blue, isTaken: true, userSelected: false),
     Seat(color: Colors.blue, isTaken: true, userSelected: false),
     Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    //
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    //
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    //
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    //
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: true, userSelected: false),
+    Seat(color: Colors.blue, isTaken: false, userSelected: false),
   ];
   return seats;
 }
