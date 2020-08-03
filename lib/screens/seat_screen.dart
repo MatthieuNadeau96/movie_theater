@@ -26,6 +26,8 @@ class _SeatScreenState extends State<SeatScreen> {
   @override
   Widget build(BuildContext context) {
     final Size deviceSize = MediaQuery.of(context).size;
+    final seatHeight = (deviceSize.height) / 15;
+    final seatWidth = (deviceSize.width) / 8;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
@@ -52,7 +54,6 @@ class _SeatScreenState extends State<SeatScreen> {
                       child: Text(
                         'Choose Seats',
                         maxLines: 1,
-                        // minFontSize: 12,
                         style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w600,
@@ -89,6 +90,8 @@ class _SeatScreenState extends State<SeatScreen> {
                     crossAxisCount: 8,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 5,
+                    childAspectRatio: (seatWidth / seatHeight),
+                    shrinkWrap: true,
                     children: [
                       ...seats.map(
                         (Seat seat) => GestureDetector(
@@ -110,16 +113,12 @@ class _SeatScreenState extends State<SeatScreen> {
                             height: 2,
                             width: 2,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(
-                                width: 2,
-                                color: Theme.of(context).canvasColor,
-                              ),
+                              borderRadius: BorderRadius.circular(12),
                               color: seat.isTaken
-                                  ? Colors.grey
+                                  ? Theme.of(context).primaryColorDark
                                   : seat.userSelected
                                       ? Theme.of(context).accentColor
-                                      : Colors.transparent,
+                                      : Theme.of(context).primaryColorLight,
                             ),
                           ),
                         ),
@@ -129,6 +128,72 @@ class _SeatScreenState extends State<SeatScreen> {
                 ),
               ),
               SizedBox(height: 60),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).accentColor,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Selected',
+                        style: TextStyle(
+                          color: Theme.of(context).canvasColor,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColorLight,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Available',
+                        style: TextStyle(
+                          color: Theme.of(context).canvasColor,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColorDark,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Reserved',
+                        style: TextStyle(
+                          color: Theme.of(context).canvasColor,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 30),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 height: deviceSize.height * 0.12,
@@ -147,6 +212,7 @@ class _SeatScreenState extends State<SeatScreen> {
                           children: [
                             Expanded(
                               child: Container(
+                                margin: EdgeInsets.only(left: 20),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
