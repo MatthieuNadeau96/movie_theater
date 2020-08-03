@@ -93,7 +93,8 @@ class _DetailScreenState extends State<DetailScreen> {
             height: 25,
             width: 25,
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Theme.of(context).canvasColor),
               strokeWidth: 4.0,
             ),
           ),
@@ -182,7 +183,8 @@ class _DetailScreenState extends State<DetailScreen> {
                           style: TextStyle(
                             fontSize: 26,
                             fontWeight: FontWeight.w600,
-                            color: Colors.white.withOpacity(0.9),
+                            color:
+                                Theme.of(context).canvasColor.withOpacity(0.9),
                           ),
                         ),
                       ),
@@ -240,7 +242,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                     'Overview',
                                     style: TextStyle(
                                       fontSize: 18,
-                                      color: Colors.white,
+                                      color: Theme.of(context).canvasColor,
                                     ),
                                   ),
                                   SizedBox(height: 15),
@@ -248,7 +250,9 @@ class _DetailScreenState extends State<DetailScreen> {
                                     child: Text(
                                       movieDetails.overview,
                                       style: TextStyle(
-                                        color: Colors.white.withOpacity(0.75),
+                                        color: Theme.of(context)
+                                            .canvasColor
+                                            .withOpacity(0.75),
                                       ),
                                     ),
                                   ),
@@ -267,14 +271,15 @@ class _DetailScreenState extends State<DetailScreen> {
                                 Text(
                                   movieDetails.rating.toString(),
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).canvasColor,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
                                   '/10',
                                   style: TextStyle(
-                                      color: Colors.white, fontSize: 10),
+                                      color: Theme.of(context).canvasColor,
+                                      fontSize: 10),
                                 ),
                               ],
                             ),
@@ -300,7 +305,7 @@ class _DetailScreenState extends State<DetailScreen> {
                                       child: Text(
                                         movieDetails.genres[index].name,
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context).canvasColor,
                                           fontSize: 12,
                                         ),
                                       ),

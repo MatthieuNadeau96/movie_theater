@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Color(0xff1E2739),
         primaryColorLight: Color(0xff2C374E),
+        primaryColorDark: Color(0xff0E1321),
         accentColor: Color(0xff9BBECF),
+        canvasColor: Color(0xffE5E7EB),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         iconTheme: IconThemeData(
           color: Colors.black,

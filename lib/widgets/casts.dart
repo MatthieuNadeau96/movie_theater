@@ -42,7 +42,7 @@ class _CastsState extends State<Casts> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: Theme.of(context).canvasColor,
                 ),
               ),
               InkWell(
@@ -89,7 +89,8 @@ class _CastsState extends State<Casts> {
             height: 25,
             width: 25,
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Theme.of(context).canvasColor),
               strokeWidth: 4.0,
             ),
           ),
@@ -144,7 +145,7 @@ class _CastsState extends State<Casts> {
                     style: TextStyle(
                       height: 1.4,
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: Theme.of(context).canvasColor,
                       fontSize: 12,
                     ),
                   ),

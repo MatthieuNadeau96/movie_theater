@@ -59,7 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 25,
             width: 25,
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(Theme.of(context).canvasColor),
               strokeWidth: 4.0,
             ),
           ),

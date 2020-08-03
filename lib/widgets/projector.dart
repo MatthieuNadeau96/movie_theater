@@ -9,6 +9,7 @@ class Projector extends StatelessWidget {
       painter: ScreenPainter(
         color1: Theme.of(context).canvasColor,
         color2: Theme.of(context).primaryColor,
+        screenColor: Theme.of(context).canvasColor,
       ),
     );
   }
@@ -17,10 +18,8 @@ class Projector extends StatelessWidget {
 class ScreenPainter extends CustomPainter {
   final Color color1;
   final Color color2;
-  ScreenPainter({
-    this.color1,
-    this.color2,
-  });
+  final Color screenColor;
+  ScreenPainter({this.color1, this.color2, this.screenColor});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -37,7 +36,7 @@ class ScreenPainter extends CustomPainter {
     screenPath.cubicTo(width * 0.25, height * 0.25, width * 0.75, height * 0.25,
         width, height);
 
-    screenPaint.color = Colors.white;
+    screenPaint.color = screenColor;
     canvas.drawPath(screenPath, screenPaint);
 
     // Movie Projection
