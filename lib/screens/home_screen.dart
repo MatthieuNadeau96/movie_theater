@@ -24,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int prevMovieIndex = -1;
   int movieIndex = -1;
+  bool scrolledYet = false;
 
   @override
   void initState() {
@@ -156,6 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       options: CarouselOptions(
                         onPageChanged: (index, reason) {
                           setState(() {
+                            scrolledYet = true;
                             movieIndex = index;
                           });
                           _linkHandler(index);
@@ -167,7 +169,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         enlargeCenterPage: true,
                         disableCenter: true,
                         enableInfiniteScroll: true,
-                        viewportFraction: deviceSize.width > 600 ? 0.55 : 0.75,
+                        viewportFraction:
+                            (deviceSize.width > 600 && deviceSize.height < 610)
+                                ? 0.55
+                                : 0.75,
                         aspectRatio: 1,
                       ),
                       items: movies.sublist(0, 10).map((movie) {
@@ -235,6 +240,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+            if (!scrolledYet)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.arrow_back,
+                            color:
+                                Theme.of(context).canvasColor.withOpacity(0.3),
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color:
+                                Theme.of(context).canvasColor.withOpacity(0.3),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: deviceSize.height * 0.05),
+                  ],
+                ),
+              ),
           ],
         ),
       );

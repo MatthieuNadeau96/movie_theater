@@ -20,6 +20,7 @@ class _TimeSlotState extends State<TimeSlot> {
 
   @override
   Widget build(BuildContext context) {
+    var deviceSize = MediaQuery.of(context).size;
     return Container(
       // color: Colors.grey,
       child: ListView.builder(
@@ -38,8 +39,8 @@ class _TimeSlotState extends State<TimeSlot> {
             },
             child: Container(
               height: 50,
-              margin: EdgeInsets.symmetric(
-                horizontal: 2,
+              margin: EdgeInsets.only(
+                right: 5,
               ),
               padding: EdgeInsets.symmetric(
                 horizontal: 20,

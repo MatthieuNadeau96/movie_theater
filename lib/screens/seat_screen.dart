@@ -31,246 +31,266 @@ class _SeatScreenState extends State<SeatScreen> {
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
       body: SafeArea(
-        child: Container(
-          child: Column(
-            children: [
-              SizedBox(height: 15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      size: 28,
-                      color: Theme.of(context).canvasColor.withOpacity(0.8),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  Container(
-                    width: deviceSize.width * 0.6,
-                    child: Center(
-                      child: Text(
-                        'Choose Seats',
-                        maxLines: 1,
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w600,
-                          color: Theme.of(context).canvasColor.withOpacity(0.9),
-                        ),
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              children: [
+                SizedBox(height: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 28,
+                        color: Theme.of(context).canvasColor.withOpacity(0.8),
                       ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      size: 28,
-                      color: Colors.transparent,
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: 60),
-              Container(
-                height: 50,
-                width: deviceSize.width * 0.75,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                child: Projector(),
-              ),
-              SizedBox(height: 60),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  height: 200,
-                  child: GridView.count(
-                    crossAxisCount: 8,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 5,
-                    childAspectRatio: (seatWidth / seatHeight),
-                    shrinkWrap: true,
-                    children: [
-                      ...seats.map(
-                        (Seat seat) => GestureDetector(
-                          onTap: () {
-                            if (!seat.isTaken)
-                              setState(() {
-                                seat.userSelected = !seat.userSelected;
-                                print(_getTotal(seats));
-                                numberOfSelectedSeats = _getTotal(seats).length;
-                                if (_getTotal(seats).isNotEmpty) {
-                                  totalPrice =
-                                      _getTotal(seats).reduce((a, b) => a + b);
-                                } else {
-                                  totalPrice = 0;
-                                }
-                              });
-                          },
-                          child: Container(
-                            height: 2,
-                            width: 2,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: seat.isTaken
-                                  ? Theme.of(context).primaryColorDark
-                                  : seat.userSelected
-                                      ? Theme.of(context).accentColor
-                                      : Theme.of(context).primaryColorLight,
-                            ),
+                    Container(
+                      width: deviceSize.width * 0.6,
+                      child: Center(
+                        child: Text(
+                          'Choose Seats',
+                          maxLines: 1,
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.w600,
+                            color:
+                                Theme.of(context).canvasColor.withOpacity(0.9),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        size: 28,
+                        color: Colors.transparent,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(height: 60),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).accentColor,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Selected',
-                        style: TextStyle(
-                          color: Theme.of(context).canvasColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorLight,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Available',
-                        style: TextStyle(
-                          color: Theme.of(context).canvasColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        height: 10,
-                        width: 10,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColorDark,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Reserved',
-                        style: TextStyle(
-                          color: Theme.of(context).canvasColor,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 30),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                height: deviceSize.height * 0.12,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                  color: Theme.of(context).primaryColorDark,
+                SizedBox(height: 60),
+                Container(
+                  height: 50,
+                  width: deviceSize.width * 0.75,
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: Projector(),
                 ),
-                child: (totalPrice > 0)
-                    ? Container(
-                        height: deviceSize.height * 0.12,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                margin: EdgeInsets.only(left: 20),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '$numberOfSelectedSeats seats',
-                                      style: TextStyle(
-                                        color: Theme.of(context).canvasColor,
-                                        // fontSize: 15,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      'Pay \$${totalPrice.toStringAsFixed(2)} ',
-                                      style: TextStyle(
-                                        color: Theme.of(context).canvasColor,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                SizedBox(height: 60),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  // height: 300,
+                  child: Expanded(
+                    child: GridView.count(
+                      crossAxisCount: 8,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 5,
+                      // childAspectRatio: (seatWidth / seatHeight),
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      children: [
+                        ...seats.map(
+                          (Seat seat) => GestureDetector(
+                            onTap: () {
+                              if (!seat.isTaken)
+                                setState(() {
+                                  seat.userSelected = !seat.userSelected;
+                                  print(_getTotal(seats));
+                                  numberOfSelectedSeats =
+                                      _getTotal(seats).length;
+                                  if (_getTotal(seats).isNotEmpty) {
+                                    totalPrice = _getTotal(seats)
+                                        .reduce((a, b) => a + b);
+                                  } else {
+                                    totalPrice = 0;
+                                  }
+                                });
+                            },
+                            child: Container(
+                              height: 2,
+                              width: 2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(12),
+                                color: seat.isTaken
+                                    ? Theme.of(context).primaryColorDark
+                                    : seat.userSelected
+                                        ? Theme.of(context).accentColor
+                                        : Theme.of(context).primaryColorLight,
                               ),
                             ),
-                            Expanded(
-                              child: FlatButton(
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 20,
-                                  horizontal: 40,
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          OrderConfirmedScreen(),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 60),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).accentColor,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Selected',
+                          style: TextStyle(
+                            color: Theme.of(context).canvasColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColorLight,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Available',
+                          style: TextStyle(
+                            color: Theme.of(context).canvasColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 10,
+                          width: 10,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).primaryColorDark,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'Reserved',
+                          style: TextStyle(
+                            color: Theme.of(context).canvasColor,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(height: 30),
+                Container(
+                  constraints: BoxConstraints(
+                    maxHeight: deviceSize.height * 0.12,
+                  ),
+                  child: Expanded(
+                    flex: 1,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                      child: (totalPrice > 0)
+                          ? Container(
+                              height: deviceSize.height * 0.12,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.only(left: 20),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '$numberOfSelectedSeats seats',
+                                            style: TextStyle(
+                                              color:
+                                                  Theme.of(context).canvasColor,
+                                              // fontSize: 15,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Pay \$${totalPrice.toStringAsFixed(2)} ',
+                                            style: TextStyle(
+                                              color:
+                                                  Theme.of(context).canvasColor,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  );
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(50)),
-                                color: Theme.of(context).primaryColorLight,
-                                child: Text(
-                                  'CONFIRM',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Theme.of(context).canvasColor,
-                                    fontSize: 18,
                                   ),
-                                ),
+                                  Expanded(
+                                    child: FlatButton(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: 20,
+                                        horizontal: 40,
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                OrderConfirmedScreen(),
+                                          ),
+                                        );
+                                      },
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(50)),
+                                      color:
+                                          Theme.of(context).primaryColorLight,
+                                      child: Text(
+                                        'CONFIRM',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          color: Theme.of(context).canvasColor,
+                                          fontSize: 18,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : TimeSlot(),
-              ),
-            ],
+                            )
+                          : TimeSlot(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
