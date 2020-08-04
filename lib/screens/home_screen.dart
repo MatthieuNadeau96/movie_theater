@@ -253,11 +253,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Icon(
                             Icons.arrow_back,
+                            size: 30,
                             color:
                                 Theme.of(context).canvasColor.withOpacity(0.3),
                           ),
                           Icon(
                             Icons.arrow_forward,
+                            size: 30,
                             color:
                                 Theme.of(context).canvasColor.withOpacity(0.3),
                           ),
