@@ -30,9 +30,10 @@ class _SeatScreenState extends State<SeatScreen> {
     final seatWidth = (deviceSize.width) / 8;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
+      body: SingleChildScrollView(
+        child: Container(
+          height: deviceSize.height,
+          child: SafeArea(
             child: Column(
               children: [
                 SizedBox(height: 15),
@@ -131,7 +132,7 @@ class _SeatScreenState extends State<SeatScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 60),
+                Spacer(flex: 1),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
